@@ -26,24 +26,11 @@ import { resetPasswordRoute } from "./Routes/resetPassword/resetPassword.js";
 
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:5173", // Frontend en desarrollo
-  "https://tu-frontend-en-produccion.com", // Frontend en producción
-];
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-        // Permitir solicitudes desde los orígenes permitidos o desde clientes sin origen (como Postman)
-        callback(null, true);
-      } else {
-        // Rechazar solicitudes desde orígenes no permitidos
-        callback(new Error("CORS not allowed"));
-      }
-    },
-    credentials: true, // Permitir el envío de cookies y encabezados de autenticación
-  })
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
 );
 
 app.use(json());
@@ -63,12 +50,14 @@ app.use("/api",middleWare,transactionsRoute)
 
 //**Definir Rutas END */
 
+
+
 export const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  PORT: Number(process.env.DB_PORT) || 3000
+  PORT: Number(process.env.DB_PORT) 
  
 });
 
@@ -91,6 +80,6 @@ db.connect((err) => {
   console.log("Conectado con exito");
 });
 
-app.listen(Number(process.env.DB_PORT), () => {
-  console.log(`Escuchando en el puerto ${Number(process.env.DB_PORT)}`);
+app.listen(Number(process.env.DB_PORT) , () => {
+  console.log(`Escuchando en el puerto ${Number(process.env.DB_PORT) }`);
 });
