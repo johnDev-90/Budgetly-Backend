@@ -1,7 +1,7 @@
 import express from "express";
 import { db } from "../../index.js";
 import jwt from "jsonwebtoken";
-import { formatFechaToYYYYMMDD } from "../../../cliente/src/helpers/FormatMoney.js";
+import { formatFechaToYYYYMMDD } from "../../Helpers/helpers.js";
 
 export const gastosRoute = express.Router();
 
