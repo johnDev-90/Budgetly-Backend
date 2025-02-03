@@ -8,6 +8,8 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 
 //**importar rutas start */
+import { PORT,DB_HOST,DB_NAME,DB_PASSWORD,DB_USER,DB_PORT } from "./config.js";
+
 import { userRoutes } from "./Routes/Login/login.js";
 import { register } from "./Routes/Login/register.js";
 import { gastosRoute } from "./Routes/gastosAPI/gastos.js";
@@ -20,7 +22,7 @@ import { resetPasswordRoute } from "./Routes/resetPassword/resetPassword.js";
 
 //**importar rutas end */
 
-const PORT = 3000;
+
 
 const app = express();
 
@@ -49,11 +51,22 @@ app.use("/api",middleWare,transactionsRoute)
 //**Definir Rutas END */
 
 export const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "Budgetly",
+  host: DB_HOST,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_NAME,
 });
+
+// export const db = mysql.createConnection({
+//   host: process.env.DB_HOST || "localhost", // Usa las variables de entorno
+//   user: process.env.DB_USER,
+//   password: process.env.DB_PASS,
+//   database: process.env.DB_NAME,
+//   port: process.env.DB_PORT || 3000,
+//   waitForConnections: true,
+//   connectionLimit: 10,
+//   queueLimit: 0,
+// });
 
 db.connect((err) => {
   if (err) {
