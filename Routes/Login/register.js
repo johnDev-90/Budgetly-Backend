@@ -73,7 +73,7 @@ register.post("/register", upload.single('imgProfile'), async (req, res) => {
   const VALUES = [FirstName, LastName, email, imageURL , encryptedPassword];
 
   db.query(
-    "INSERT iNTO budgetly.users(name, lastName, email, imageUrl, password) VALUES(?,?,?,?,?)",
+    "INSERT iNTO railway.users(name, lastName, email, imageUrl, password) VALUES(?,?,?,?,?)",
     VALUES,
     (err, result) => {
       if (err)

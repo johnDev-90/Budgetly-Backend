@@ -68,6 +68,7 @@ export const db = mysql.createConnection({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+  PORT: Number(process.env.DB_PORT) || 3000
  
 });
 
@@ -90,6 +91,6 @@ db.connect((err) => {
   console.log("Conectado con exito");
 });
 
-app.listen(PORT, () => {
-  console.log(`Escuchando en el puerto ${PORT}`);
+app.listen(Number(process.env.DB_PORT), () => {
+  console.log(`Escuchando en el puerto ${Number(process.env.DB_PORT)}`);
 });
