@@ -25,8 +25,8 @@ import { resetPasswordRoute } from "./Routes/resetPassword/resetPassword.js";
 
 
 const app = express();
-
-const PORT = 3000
+app.use(express.json());
+const PORT = process.env.PORT || 3000
 
 
 
@@ -54,8 +54,7 @@ app.use("/api",middleWare,transactionsRoute)
 
 //**Definir Rutas END */
 
-
-
+// mysql://root:rjLUPNuxDXnUfQDzCDNNevWxqKVDARsd@autorack.proxy.rlwy.net:15902/railway
 
 export const db = mysql.createConnection({
   host:"localhost",
@@ -70,15 +69,6 @@ db.connect((err) => {
     console.error("Error de conexión a la base de datos:");
     console.error("Detalles del error:", err); // Imprime el objeto de error completo
 
-    if (err.code === 'ER_ACCESS_DENIED_ERROR') {
-      console.error("Credenciales incorrectas. Revisa DB_USER y DB_PASSWORD en Railway.");
-    } else if (err.code === 'ECONNREFUSED') {
-      console.error("Conexión rechazada. Verifica DB_HOST y DB_PORT en Railway.");
-    } else if (err.code === 'ETIMEDOUT') {
-      console.error("Tiempo de espera agotado. Verifica la conexión de red (poco probable en Railway).");
-    } else {
-      console.error("Error desconocido:", err.code); // Imprime el código de error
-    }
     return; // Importante: Detén la ejecución si hay un error
   }
   console.log("¡Conexión exitosa a la base de datos!");

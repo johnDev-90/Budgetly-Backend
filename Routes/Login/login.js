@@ -10,10 +10,10 @@ userRoutes.post("/login", (req,res) => {
 
   const {email, password} = req.body
 
-  console.log(email)
-  console.log(password)
 
-  if (!email || !password) return res.status(500).send("Campos vacio");
+  if (email === '' || password === '') return res.status(500).send("Campos vacio");
+
+
 
   db.query(
     "SElECT * FROM budgetly.users WHERE email=?",
