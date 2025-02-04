@@ -6,10 +6,13 @@ import { db } from "../../index.js";
 
 export const userRoutes = express.Router();
 
-userRoutes.post("/login", (req, res) => {
-  const { email, password } = req.body;
+userRoutes.post("/login", (req,res) => {
 
-  //**Comprobar que el usuario existe */
+  const {email, password} = req.body
+
+  console.log(email)
+  console.log(password)
+
   if (!email || !password) return res.status(500).send("Campos vacio");
 
   db.query(
@@ -60,6 +63,8 @@ userRoutes.post("/login", (req, res) => {
       res.status(201).send({ message: "Bienvenido!", user: payLoad });
     },
   );
+
+
 });
 
 userRoutes.get("/authenticate", (req, res) => {

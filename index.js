@@ -7,8 +7,7 @@ import cookieParser from "cookie-parser";
 
 dotenv.config();
 
-//**importar rutas start */
-import { PORT,DB_HOST,DB_NAME,DB_PASSWORD,DB_USER,DB_PORT } from "./config.js";
+
 
 import { userRoutes } from "./Routes/Login/login.js";
 import { register } from "./Routes/Login/register.js";
@@ -20,11 +19,14 @@ import { profileRoute } from "./Routes/Login/register.js";
 import { transactionsRoute } from "./Routes/transactionsRoute/transactions.js";
 import { resetPasswordRoute } from "./Routes/resetPassword/resetPassword.js";
 
+
 //**importar rutas end */
 
 
 
 const app = express();
+
+const PORT = 3000
 
 
 
@@ -54,34 +56,34 @@ app.use("/api",middleWare,transactionsRoute)
 
 
 
-export const db = mysql.createConnection({
-  host: process.env.DB_HOST || "localhost",
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  PORT: Number(process.env.DB_PORT) 
- 
-});
 
-// export const db = mysql.createConnection({
-//   host: process.env.DB_HOST || "localhost", // Usa las variables de entorno
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASS,
-//   database: process.env.DB_NAME,
-//   port: process.env.DB_PORT || 3000,
-//   waitForConnections: true,
-//   connectionLimit: 10,
-//   queueLimit: 0,
-// });
+export const db = mysql.createConnection({
+  host:"localhost",
+  user: "root",
+  password: "root",
+  database: "budgetly",
+  
+});
 
 db.connect((err) => {
   if (err) {
-    console.log(err);
-    return;
+    console.error("Error de conexión a la base de datos:");
+    console.error("Detalles del error:", err); // Imprime el objeto de error completo
+
+    if (err.code === 'ER_ACCESS_DENIED_ERROR') {
+      console.error("Credenciales incorrectas. Revisa DB_USER y DB_PASSWORD en Railway.");
+    } else if (err.code === 'ECONNREFUSED') {
+      console.error("Conexión rechazada. Verifica DB_HOST y DB_PORT en Railway.");
+    } else if (err.code === 'ETIMEDOUT') {
+      console.error("Tiempo de espera agotado. Verifica la conexión de red (poco probable en Railway).");
+    } else {
+      console.error("Error desconocido:", err.code); // Imprime el código de error
+    }
+    return; // Importante: Detén la ejecución si hay un error
   }
-  console.log("Conectado con exito");
+  console.log("¡Conexión exitosa a la base de datos!");
 });
 
-app.listen(Number(process.env.PORT) , () => {
-  console.log(`Escuchando en el puerto ${Number(process.env.PORT) }`);
-});
+app.listen(PORT, () => {
+  console.log(`escuchando en el puerto ${PORT}`)
+})
