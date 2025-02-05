@@ -56,11 +56,12 @@ app.use("/api",middleWare,transactionsRoute)
 
 // mysql://root:rjLUPNuxDXnUfQDzCDNNevWxqKVDARsd@autorack.proxy.rlwy.net:15902/railway
 
+
 export const db = mysql.createConnection({
-  host:"localhost",
-  user: "root",
-  password: "root",
-  database: "budgetly",
+  host:process.env.DB_HOST,
+  user:process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   
 });
 
